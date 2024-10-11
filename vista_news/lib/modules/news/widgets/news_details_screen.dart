@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:vista_news/common/constants/app_colors.dart';
 import 'package:vista_news/common/widgets/custom_network_image.dart';
 import 'package:vista_news/common/widgets/url_launcher.dart';
@@ -19,6 +20,8 @@ class NewsDetailScreen extends StatelessWidget {
       "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png";
   @override
   Widget build(BuildContext context) {
+    print(newsArticle.publishedAt);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("News"),
@@ -45,10 +48,13 @@ class NewsDetailScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    newsArticle.publishedAt ?? "",
-                    style: const TextStyle(color: AppColors.greyColor),
-                  ),
+                  if (newsArticle.publishedAt != null)
+                    Text(
+                      DateFormat.yMMMd()
+                          .add_jm()
+                          .format(DateTime.parse(newsArticle.publishedAt!)),
+                      style: const TextStyle(color: AppColors.greyColor),
+                    ),
                   isSavedArticle
                       ? IconButton(
                           icon: const Icon(Icons.delete),
