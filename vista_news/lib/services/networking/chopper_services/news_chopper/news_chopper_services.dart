@@ -1,5 +1,5 @@
 import 'package:chopper/chopper.dart';
-import 'package:vista_news/models/news.dart';
+import 'package:vista_news/common/constants/api_constants.dart';
 
 part 'news_chopper_services.chopper.dart';
 
@@ -8,10 +8,21 @@ abstract class NewsChopperServices extends ChopperService {
   static NewsChopperServices create([ChopperClient? client]) =>
       _$NewsChopperServices(client);
 
-  @Get(path: '/v2/top-headlines')
-  Future<Response<News>> fetchTopNews(
+  @Get(path: NewsApiConstants.allNewsUrl, headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  })
+  Future<Response<Map<String, dynamic>>> fetchTopNews(
     @Query('apiKey') String apiKey,
-    @Query('sources') String sources,
-    @Query('q') String? query,
+    @Query('q') String query,
+  );
+
+  @Get(path: NewsApiConstants.favNewsUrl, headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  })
+  Future<Response<Map<String, dynamic>>> fetchFavNews(
+    @Query('apiKey') String apiKey,
+    @Query('category') String category,
   );
 }

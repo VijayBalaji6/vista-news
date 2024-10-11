@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vista_news/common/constants/app_colors.dart';
-import 'package:vista_news/models/weather_model.dart';
+import 'package:vista_news/models/weather/weather_model.dart';
 
 class HomeWeatherInfoWidget extends StatelessWidget {
   const HomeWeatherInfoWidget({super.key, required this.weatherData});
@@ -11,15 +11,18 @@ class HomeWeatherInfoWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Weather in ${weatherData.current!.condition!.text}',
+          'Weather is ${weatherData.current!.condition!.text}',
           style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
               color: AppColors.whiteColor),
         ),
         Text(
-          'Weather in ${weatherData.current!.tempC} C', // Replace with actual weather data
-          style: const TextStyle(fontSize: 18, color: AppColors.whiteColor),
+          '${weatherData.current!.tempC}° C',
+          style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: AppColors.whiteColor),
         ),
       ],
     );

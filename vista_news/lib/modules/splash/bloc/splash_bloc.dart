@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vista_news/models/user.dart';
+import 'package:vista_news/models/user/user.dart';
 import 'package:vista_news/repositories/auth_repository.dart';
 import 'package:vista_news/services/local/auth_services.dart';
 

@@ -18,23 +18,50 @@ final class _$NewsChopperServices extends NewsChopperServices {
   final Type definitionType = NewsChopperServices;
 
   @override
-  Future<Response<News>> fetchTopNews(
+  Future<Response<Map<String, dynamic>>> fetchTopNews(
     String apiKey,
-    String sources,
-    String? query,
+    String query,
   ) {
-    final Uri $url = Uri.parse('/v2/top-headlines');
+    final Uri $url = Uri.parse('/everything');
     final Map<String, dynamic> $params = <String, dynamic>{
       'apiKey': apiKey,
-      'sources': sources,
       'q': query,
+    };
+    final Map<String, String> $headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
     };
     final Request $request = Request(
       'GET',
       $url,
       client.baseUrl,
       parameters: $params,
+      headers: $headers,
     );
-    return client.send<News, News>($request);
+    return client.send<Map<String, dynamic>, Map<String, dynamic>>($request);
+  }
+
+  @override
+  Future<Response<Map<String, dynamic>>> fetchFavNews(
+    String apiKey,
+    String category,
+  ) {
+    final Uri $url = Uri.parse('/top-headlines');
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'apiKey': apiKey,
+      'category': category,
+    };
+    final Map<String, String> $headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    };
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+      headers: $headers,
+    );
+    return client.send<Map<String, dynamic>, Map<String, dynamic>>($request);
   }
 }

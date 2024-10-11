@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:vista_news/models/user.dart';
+import 'package:vista_news/models/user/user.dart';
 
 class AuthService {
   static const String _userKey = 'user';

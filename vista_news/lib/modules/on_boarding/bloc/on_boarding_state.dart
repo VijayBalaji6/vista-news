@@ -27,7 +27,7 @@ class CityStep extends OnBoardingState {
   final String? userCityName;
   const CityStep({required this.userCityName});
   @override
-  List<Object> get props => [userCityName!];
+  List<Object> get props => [userCityName ?? ""];
 }
 
 class OnBoardingComplete extends OnBoardingState {

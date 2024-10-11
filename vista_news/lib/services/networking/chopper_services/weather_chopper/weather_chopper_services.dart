@@ -1,6 +1,5 @@
 import 'package:chopper/chopper.dart';
 import 'package:vista_news/common/constants/api_constants.dart';
-import 'package:vista_news/models/weather_model.dart';
 
 part 'weather_chopper_services.chopper.dart';
 

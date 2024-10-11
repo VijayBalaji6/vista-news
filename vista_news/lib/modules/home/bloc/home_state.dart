@@ -1,12 +1,12 @@
 part of 'home_bloc.dart';
 
 sealed class HomeState extends Equatable {
-  final int? currentTabIndex;
+  final int currentTabIndex;
   final Weather? weatherData;
   final String? weatherErrorMessage;
 
   const HomeState({
-    this.currentTabIndex,
+    required this.currentTabIndex,
     this.weatherData,
     this.weatherErrorMessage,
   });
@@ -19,26 +19,34 @@ sealed class HomeState extends Equatable {
       ];
 }
 
-final class CurrentBottomNavState extends HomeState {
-  const CurrentBottomNavState({required int currentTabIndex})
-      : super(currentTabIndex: currentTabIndex);
-
-  @override
-  List<Object?> get props => [currentTabIndex];
-}
-
 final class WeatherLoadedState extends HomeState {
   const WeatherLoadedState({
-    required Weather weatherData,
-  }) : super(weatherData: weatherData);
+    required super.weatherData,
+    required super.currentTabIndex,
+  });
+  @override
+  List<Object?> get props => [
+        weatherData,
+        currentTabIndex,
+      ];
 }
 
 final class WeatherLoadingState extends HomeState {
-  const WeatherLoadingState();
+  const WeatherLoadingState({required super.currentTabIndex});
+  @override
+  List<Object?> get props => [
+        currentTabIndex,
+      ];
 }
 
 final class WeatherErrorState extends HomeState {
   const WeatherErrorState({
-    required String weatherErrorMessage,
-  }) : super(weatherErrorMessage: weatherErrorMessage);
+    required super.weatherErrorMessage,
+    required super.currentTabIndex,
+  });
+  @override
+  List<Object?> get props => [
+        currentTabIndex,
+        weatherErrorMessage,
+      ];
 }

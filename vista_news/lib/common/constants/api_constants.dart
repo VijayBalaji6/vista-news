@@ -7,6 +7,13 @@ class WeatherApiConstants {
 class NewsApiConstants {
   static const String newsBaseURL = "https://newsapi.org/v2";
   static const String newsApiKey = '9225ffe4d3084a1d8d5a1302fb082054';
-  static const String newsHeadlineUrl = "/everything";
-  //https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=9225ffe4d3084a1d8d5a1302fb082054
+  static const String allNewsUrl = "/everything";
+  static const String favNewsUrl = "/top-headlines";
+}
+
+class LocationApiConstants {
+  static const String locationBaseURL = 'https://api-bdc.net/';
+
+  static const String locationApiKey = 'bdc_04e45c8383d54849876ffdf2a1a18752';
+  static const String geoLocUrl = "/data/reverse-geocode";
 }

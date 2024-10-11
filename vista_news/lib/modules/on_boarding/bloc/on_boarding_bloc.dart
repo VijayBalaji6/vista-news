@@ -1,8 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vista_news/models/user.dart';
+import 'package:vista_news/models/location/location.dart';
+import 'package:vista_news/models/user/user.dart';
 import 'package:vista_news/repositories/auth_repository.dart';
 import 'package:vista_news/services/local/auth_services.dart';
+import 'package:vista_news/services/remote/location_services.dart';
 
 part 'on_boarding_event.dart';
 part 'on_boarding_state.dart';
@@ -62,14 +64,15 @@ class OnBoardingBloc extends Bloc<OnBoardingEvent, OnBoardingState> {
     emit(OnBoardingComplete(user: user));
   }
 
-  _onCityAutoFilled(CityAutoFilled event, Emitter<OnBoardingState> emit) {
-    // Position position = await Geolocator.getCurrentPosition();
-    // List<Placemark> placemarks =
-    //     await placemarkFromCoordinates(position.latitude, position.longitude);
-    // if (placemarks.isNotEmpty) {
-    //   city = placemarks[0].locality;
-    // }
-    // emit(CityStep(city: city));
+  _onCityAutoFilled(CityAutoFilled event, Emitter<OnBoardingState> emit) async {
+    try {
+      final userLocation = await LocationService.getCurrentPosition();
+      final Location userLocationData = await LocationService.getUserLocation(
+          latitude: userLocation.latitude, longitude: userLocation.longitude);
+      emit(CityStep(userCityName: userLocationData.city));
+    } catch (e) {
+      emit(const CityStep(userCityName: null));
+    }
   }
 
   _onBackPressed(BackPressed event, Emitter<OnBoardingState> emit) {

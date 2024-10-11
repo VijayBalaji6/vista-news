@@ -1,10 +1,14 @@
 part of 'settings_bloc.dart';
 
-sealed class SettingsState extends Equatable {
-  const SettingsState();
-  
-  @override
-  List<Object> get props => [];
-}
+class SettingsState extends Equatable {
+  final ThemeData themeData;
+  final User? user; // Nullable user
 
-final class SettingsInitial extends SettingsState {}
+  const SettingsState({
+    required this.themeData,
+    this.user,
+  });
+
+  @override
+  List<Object?> get props => [themeData, user];
+}

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vista_news/common/constants/app_colors.dart';
-import 'package:vista_news/models/weather_model.dart';
+import 'package:vista_news/models/weather/weather_model.dart';
 import 'package:vista_news/modules/home/view/widgtes/home_weather_info_widget.dart';
 import 'package:vista_news/utils/routes/app_route_constant.dart';
 
 class HomeAppBar extends StatelessWidget {
-  const HomeAppBar({super.key, required this.weatherData});
+  const HomeAppBar(
+      {super.key, required this.weatherData, required this.userName});
   final Weather weatherData;
+  final String userName;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -15,20 +17,6 @@ class HomeAppBar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: Column(
         children: [
-          const Text(
-            "Good Morning",
-            style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: AppColors.whiteColor),
-          ),
-          const Text(
-            "Vijay",
-            style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: AppColors.whiteColor),
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -41,7 +29,7 @@ class HomeAppBar extends StatelessWidget {
                   color: AppColors.whiteColor,
                 ),
                 onPressed: () {
-                  context.goNamed(AppRouteConstants.settingsScreen);
+                  context.pushNamed(AppRouteConstants.settingsScreen);
                 },
               )
             ],

@@ -27,8 +27,9 @@ class HomePageBottomBar extends StatelessWidget {
         ),
       ],
       currentIndex: currentPage,
-      onTap: (int selectedIndex) =>
-          context.read<HomeBloc>().add(ChangeTabEvent(tabIndex: selectedIndex)),
+      onTap: (int selectedIndex) {
+        context.read<HomeBloc>().add(ChangeTabEvent(tabIndex: selectedIndex));
+      },
       backgroundColor: AppColors.themeColor,
       unselectedItemColor: AppColors.greyColor,
       unselectedLabelStyle:

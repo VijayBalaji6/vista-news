@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vista_news/common/widgets/common_app_button.dart';
+import 'package:vista_news/common/widgets/common_text_from_field.dart';
 import 'package:vista_news/modules/on_boarding/bloc/on_boarding_bloc.dart';
 
 class CityStepWidget extends StatelessWidget {
@@ -9,43 +11,78 @@ class CityStepWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const Text("Step 3: Enter your city"),
-          TextFormField(
-            controller: cityController,
-            decoration: const InputDecoration(hintText: "City"),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return BlocBuilder<OnBoardingBloc, OnBoardingState>(
+      builder: (context, state) {
+        String cityName = "";
+        if (state is CityStep) {
+          cityName = state.userCityName ?? "";
+        }
+        return Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              ElevatedButton(
-                onPressed: () {
-                  context.read<OnBoardingBloc>().add(BackPressed());
-                },
-                child: const Text("Back"),
+              const SizedBox(
+                height: 30,
               ),
-              ElevatedButton(
-                onPressed: () {
-                  context
-                      .read<OnBoardingBloc>()
-                      .add(CitySubmitted(cityController.text));
-                },
-                child: const Text("Finish"),
+              const Text(
+                "Step 3: Enter your city",
+                style: TextStyle(fontSize: 25),
               ),
-              ElevatedButton(
-                onPressed: () {
+              const SizedBox(
+                height: 30,
+              ),
+              CommonTextFormField(
+                textFormFieldController: cityController..text = cityName,
+                labelName: "City",
+                prefixIcon: Icons.location_city_outlined,
+                emptyMessage: 'Please enter your name',
+                validationMessage: 'Only alphabets allowed',
+                textFieldValidateExpression: r'^[a-zA-Z]+$',
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: CommonAppButton(
+                      buttonAction: () {
+                        context.read<OnBoardingBloc>().add(BackPressed());
+                      },
+                      buttonName: "Back",
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Expanded(
+                    child: CommonAppButton(
+                      buttonAction: () {
+                        context.read<OnBoardingBloc>().add(CitySubmitted(
+                            cityController.text.isEmpty
+                                ? null
+                                : cityController.text));
+                      },
+                      buttonName: "Finish",
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              CommonAppButton(
+                buttonAction: () {
                   context.read<OnBoardingBloc>().add(CityAutoFilled());
                 },
-                child: const Text("Auto-fill city"),
+                buttonName: " Auto-fill city ",
               )
             ],
-          )
-        ],
-      ),
+          ),
+        );
+      },
     );
   }
 }
