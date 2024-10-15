@@ -9,19 +9,19 @@ import 'package:vista_news/utils/theme/app_theme.dart';
 
 class MockAuthRepository extends Mock implements AuthRepository {}
 
-class MockNewsDbService extends Mock implements NewsDbRepository {}
+class MockNewsDbRepository extends Mock implements NewsDbRepository {}
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   late SettingsBloc settingsBloc;
   late MockAuthRepository mockAuthRepository;
-  late MockNewsDbService mockNewsDbService;
+  late MockNewsDbRepository mockNewsDbService;
 
   final user = User(userName: 'Vijay', favNewsCategory: [], city: null);
 
   setUp(() {
     mockAuthRepository = MockAuthRepository();
-    mockNewsDbService = MockNewsDbService();
+    mockNewsDbService = MockNewsDbRepository();
     settingsBloc = SettingsBloc(
         authRepository: mockAuthRepository,
         newsDbRepository: mockNewsDbService);

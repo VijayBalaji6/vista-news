@@ -44,7 +44,6 @@ void main() {
         ),
       ],
       verify: (_) {
-        // Verifies that the repository's getWeather function was called once
         verify(() => mockWeatherRepository.getWeather('New York')).called(1);
       },
     );
@@ -52,7 +51,6 @@ void main() {
     blocTest<HomeBloc, HomeState>(
       'Test LoadWeatherEvent fails case',
       build: () {
-        // Simulate an exception being thrown by the repository
         when(() => mockWeatherRepository.getWeather('New York'))
             .thenThrow(Exception('Failed to load weather data'));
         return homeBloc;

@@ -5,7 +5,6 @@ import 'package:vista_news/models/news/news.dart';
 import 'package:vista_news/modules/news/fav_news/bloc/fav_news_bloc.dart';
 import 'package:vista_news/repositories/news_repository.dart';
 
-// Mock class for NewsRepository
 class MockNewsRepository extends Mock implements NewsRepository {}
 
 final News mockNewsData = News();

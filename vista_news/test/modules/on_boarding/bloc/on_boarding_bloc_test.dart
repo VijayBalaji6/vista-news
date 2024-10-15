@@ -8,9 +8,9 @@ import 'package:vista_news/modules/on_boarding/bloc/on_boarding_bloc.dart';
 import 'package:vista_news/repositories/auth_repository.dart';
 import 'package:vista_news/repositories/location_repository.dart';
 
-class MockLocationService extends Mock implements LocationRepository {}
+class MockLocationRepository extends Mock implements LocationRepository {}
 
-class MockAuthService extends Mock implements AuthRepository {}
+class MockAuthRepository extends Mock implements AuthRepository {}
 
 final mockUser = User(userName: "vijay", favNewsCategory: [], city: 'Madurai');
 
@@ -35,12 +35,12 @@ void main() {
 
   group('OnBoardingBloc', () {
     late OnBoardingBloc onBoardingBloc;
-    late MockLocationService mockLocationService;
-    late MockAuthService mockAuthRepo;
+    late MockLocationRepository mockLocationService;
+    late MockAuthRepository mockAuthRepo;
 
     setUp(() {
-      mockLocationService = MockLocationService();
-      mockAuthRepo = MockAuthService();
+      mockLocationService = MockLocationRepository();
+      mockAuthRepo = MockAuthRepository();
       onBoardingBloc = OnBoardingBloc(
           locationRepository: mockLocationService,
           authRepository: mockAuthRepo);
