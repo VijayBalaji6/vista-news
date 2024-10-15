@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vista_news/common/constants/app_colors.dart';
-import 'package:vista_news/models/weather/weather_model.dart';
+import 'package:vista_news/models/weather/weather.dart';
 import 'package:vista_news/modules/home/view/widgtes/home_weather_info_widget.dart';
 import 'package:vista_news/utils/routes/app_route_constant.dart';
 

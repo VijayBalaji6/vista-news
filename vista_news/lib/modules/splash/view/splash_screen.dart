@@ -19,7 +19,6 @@ class SplashScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: BlocListener<SplashBloc, SplashState>(
-          bloc: SplashBloc()..add(CheckIsUserRegisteredEvent()),
           listener: (BuildContext context, state) {
             if (state is RegisteredState) {
               UtilServices.hasNetworkConnection().then((hasNetwork) {

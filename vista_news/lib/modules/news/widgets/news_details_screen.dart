@@ -20,8 +20,6 @@ class NewsDetailScreen extends StatelessWidget {
       "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png";
   @override
   Widget build(BuildContext context) {
-    print(newsArticle.publishedAt);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("News"),

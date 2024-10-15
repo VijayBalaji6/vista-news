@@ -8,6 +8,10 @@ import 'package:vista_news/modules/news/fav_news/bloc/fav_news_bloc.dart';
 import 'package:vista_news/modules/news/saved_news/bloc/saved_news_bloc.dart';
 import 'package:vista_news/modules/settings/bloc/settings_bloc.dart';
 import 'package:vista_news/modules/splash/bloc/splash_bloc.dart';
+import 'package:vista_news/repositories/auth_repository.dart';
+import 'package:vista_news/repositories/news_db_repository.dart';
+import 'package:vista_news/repositories/news_repository.dart';
+import 'package:vista_news/repositories/weather_repository.dart';
 import 'package:vista_news/services/local/news_db_services.dart';
 import 'package:vista_news/services/networking/chopper_client.dart';
 import 'package:vista_news/utils/routes/app_routes.dart';
@@ -38,19 +42,29 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final WeatherRepository weatherRepository = WeatherRepositoryImpl();
+    final AuthRepository authRepository = AuthRepositoryImpl();
+    final NewsDbRepository newsDbRepository = NewsDBRepositoryImpl();
+    final NewsRepository newsRepository = NewsRepositoryImpl();
+
     return MultiBlocProvider(
       providers: [
         BlocProvider<SettingsBloc>(
-            create: (BuildContext context) => SettingsBloc()),
+            create: (BuildContext context) => SettingsBloc(
+                authRepository: authRepository,
+                newsDbRepository: newsDbRepository)),
         BlocProvider<SplashBloc>(
-            create: (BuildContext context) => SplashBloc()),
-        BlocProvider<HomeBloc>(create: (BuildContext context) => HomeBloc()),
+            create: (BuildContext context) =>
+                SplashBloc(authRepository: authRepository)
+                  ..add(CheckIsUserRegisteredEvent())),
+        BlocProvider<HomeBloc>(
+            create: (BuildContext context) => HomeBloc(weatherRepository)),
         BlocProvider<AllNewsBloc>(
-            create: (BuildContext context) => AllNewsBloc()),
+            create: (BuildContext context) => AllNewsBloc(newsRepository)),
         BlocProvider<FavNewsBloc>(
-            create: (BuildContext context) => FavNewsBloc()),
+            create: (BuildContext context) => FavNewsBloc(newsRepository)),
         BlocProvider<SavedNewsBloc>(
-            create: (BuildContext context) => SavedNewsBloc()),
+            create: (BuildContext context) => SavedNewsBloc(newsDbRepository)),
       ],
       child: ScreenUtilInit(
         designSize: const Size(360, 690),

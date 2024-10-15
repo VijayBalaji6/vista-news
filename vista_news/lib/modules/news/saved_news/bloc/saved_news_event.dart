@@ -9,3 +9,6 @@ sealed class SavedNewsEvent extends Equatable {
 
 
 class FetchSavedNews extends SavedNewsEvent {}
+
+class DeleteSavedNews extends SavedNewsEvent {}
+

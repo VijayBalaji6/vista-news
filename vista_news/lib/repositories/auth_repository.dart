@@ -1,20 +1,27 @@
 import 'package:vista_news/models/user/user.dart';
 import 'package:vista_news/services/local/auth_services.dart';
 
-class AuthRepository {
-  final AuthService _authService;
+abstract class AuthRepository {
+  Future<User?> getLoggedInUser();
+  Future<void> logInUser({required User userData});
+  Future<void> logOutUser();
+}
 
-  AuthRepository(this._authService);
+class AuthRepositoryImpl implements AuthRepository {
+  AuthRepositoryImpl();
 
+  @override
   Future<User?> getLoggedInUser() async {
-    return await _authService.getLoggedInUser();
+    return await AuthService.getLoggedInUser();
   }
 
+  @override
   Future<void> logInUser({required User userData}) async {
-    await _authService.logInUser(userData);
+    await AuthService.logInUser(userData);
   }
 
+  @override
   Future<void> logOutUser() async {
-    await _authService.logOutUser();
+    await AuthService.logOutUser();
   }
 }

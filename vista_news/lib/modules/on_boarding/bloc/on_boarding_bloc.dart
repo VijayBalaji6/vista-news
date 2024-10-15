@@ -1,24 +1,26 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:vista_news/models/location/location.dart';
 import 'package:vista_news/models/user/user.dart';
 import 'package:vista_news/repositories/auth_repository.dart';
-import 'package:vista_news/services/local/auth_services.dart';
-import 'package:vista_news/services/remote/location_services.dart';
+import 'package:vista_news/repositories/location_repository.dart';
 
 part 'on_boarding_event.dart';
 part 'on_boarding_state.dart';
 
 class OnBoardingBloc extends Bloc<OnBoardingEvent, OnBoardingState> {
+  final LocationRepository locationRepository;
+  final AuthRepository authRepository;
   User user = User(
     userName: '',
     favNewsCategory: [],
     city: null,
   );
 
-  final AuthRepository _authRepository = AuthRepository(AuthService());
-
-  OnBoardingBloc() : super(const NameStep(userName: '')) {
+  OnBoardingBloc(
+      {required this.locationRepository, required this.authRepository})
+      : super(const NameStep(userName: '')) {
     on<NameSubmitted>(_onNameSubmitted);
 
     on<CategoriesUpdate>(_onCategoriesUpdate);
@@ -60,15 +62,16 @@ class OnBoardingBloc extends Bloc<OnBoardingEvent, OnBoardingState> {
 
   _onCitySubmitted(CitySubmitted event, Emitter<OnBoardingState> emit) {
     user = user.copyWith(city: event.city);
-    _authRepository.logInUser(userData: user);
+    authRepository.logInUser(userData: user);
     emit(OnBoardingComplete(user: user));
   }
 
   _onCityAutoFilled(CityAutoFilled event, Emitter<OnBoardingState> emit) async {
     try {
-      final userLocation = await LocationService.getCurrentPosition();
-      final Location userLocationData = await LocationService.getUserLocation(
-          latitude: userLocation.latitude, longitude: userLocation.longitude);
+      final Position userLocation =
+          await locationRepository.getCurrentPosition();
+      final Location userLocationData = await locationRepository
+          .fetchUserLocation(userLocation.latitude, userLocation.longitude);
       emit(CityStep(userCityName: userLocationData.city));
     } catch (e) {
       emit(const CityStep(userCityName: null));

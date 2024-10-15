@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vista_news/common/constants/app_colors.dart';
-import 'package:vista_news/models/weather/weather_model.dart';
+import 'package:vista_news/models/weather/weather.dart';
 
 class HomeWeatherInfoWidget extends StatelessWidget {
   const HomeWeatherInfoWidget({super.key, required this.weatherData});

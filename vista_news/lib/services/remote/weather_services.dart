@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:vista_news/common/constants/api_constants.dart';
-import 'package:vista_news/models/weather/weather_model.dart';
+import 'package:vista_news/models/weather/weather.dart';
 import 'package:vista_news/services/networking/chopper_client.dart';
 import 'package:vista_news/services/networking/chopper_services/weather_chopper/weather_chopper_services.dart';
 import 'package:vista_news/services/remote/api_core/api_error_handler.dart';

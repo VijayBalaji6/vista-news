@@ -9,15 +9,20 @@ import 'package:vista_news/modules/on_boarding/view/widgets/category_step_widget
 import 'package:vista_news/modules/on_boarding/view/widgets/city_step_widget.dart';
 import 'package:vista_news/modules/on_boarding/view/widgets/name_step_widget.dart';
 import 'package:vista_news/modules/settings/bloc/settings_bloc.dart';
+import 'package:vista_news/repositories/auth_repository.dart';
+import 'package:vista_news/repositories/location_repository.dart';
 import 'package:vista_news/utils/routes/app_route_constant.dart';
 
 class OnboardingScreen extends StatelessWidget {
-  const OnboardingScreen({super.key});
-
+  OnboardingScreen({super.key});
+  final LocationRepository locationRepository = LocationRepositoryImpl();
+  final AuthRepository authRepository = AuthRepositoryImpl();
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => OnBoardingBloc(),
+      create: (context) => OnBoardingBloc(
+          locationRepository: locationRepository,
+          authRepository: authRepository),
       child: Scaffold(
         appBar: AppBar(title: const Text("Onboarding Flow")),
         body: BlocConsumer<OnBoardingBloc, OnBoardingState>(

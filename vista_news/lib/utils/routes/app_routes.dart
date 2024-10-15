@@ -21,7 +21,7 @@ class AppRoutes {
       GoRoute(
         name: AppRouteConstants.onBoardingScreen,
         path: '/onBoarding',
-        builder: (context, state) => const OnboardingScreen(),
+        builder: (context, state) => OnboardingScreen(),
       ),
       GoRoute(
         name: AppRouteConstants.homeScreen,

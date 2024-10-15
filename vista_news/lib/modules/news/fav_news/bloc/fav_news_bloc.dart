@@ -1,13 +1,15 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vista_news/models/news/news.dart';
-import 'package:vista_news/services/remote/news_services.dart';
+import 'package:vista_news/repositories/news_repository.dart';
 
 part 'fav_news_event.dart';
 part 'fav_news_state.dart';
 
 class FavNewsBloc extends Bloc<FavNewsEvent, FavNewsState> {
-  FavNewsBloc() : super(FavNewsLoadingState()) {
+  final NewsRepository _newsRepository;
+
+  FavNewsBloc(this._newsRepository) : super(FavNewsLoadingState()) {
     on<FetchFavNews>(_onFetchFavNewsEvent);
   }
 
@@ -19,7 +21,7 @@ class FavNewsBloc extends Bloc<FavNewsEvent, FavNewsState> {
       News? allFavNews;
 
       for (String category in favCategories) {
-        final newsData = await NewsServices.getFavNews(favCategory: category);
+        final newsData = await _newsRepository.fetchFavNews(category);
 
         if (allFavNews == null) {
           allFavNews = newsData;
