@@ -6,12 +6,17 @@ import 'package:vista_news/modules/home/bloc/home_bloc.dart';
 import 'package:vista_news/modules/home/view/home_bottom_bar.dart';
 import 'package:vista_news/modules/home/view/home_page_body.dart';
 import 'package:vista_news/modules/home/view/widgtes/home_weather_info_widget.dart';
+import 'package:vista_news/modules/news/saved_news/views/saved_news_view.dart';
 import 'package:vista_news/modules/settings/bloc/settings_bloc.dart';
 import 'package:vista_news/utils/routes/app_route_constant.dart';
 import 'package:vista_news/utils/util_services.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+
+  Future<bool> checkNewWork() async {
+    return await UtilServices.hasNetworkConnection();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,8 +91,15 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       Expanded(
-                          child: HomePageBody(
-                              currentPage: homeState.currentTabIndex)),
+                          child: FutureBuilder(
+                              future: checkNewWork(),
+                              builder: (context, snapshot) {
+                                return (snapshot.hasData ||
+                                        snapshot.data == false)
+                                    ? const SavedNewsView()
+                                    : HomePageBody(
+                                        currentPage: homeState.currentTabIndex);
+                              })),
                     ],
                   ),
                 ),
